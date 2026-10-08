@@ -4,8 +4,8 @@ window.birthdayConfig = {
     birthday: "10月9日"
   },
   audio: {
-    enabled: false,
-    src: "assets/audio/birthday.mp3"
+    enabled: true,
+    src: "assets/audio/birthday.ogg"
   },
   blessings: [
     {

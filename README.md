@@ -21,7 +21,9 @@ py -m http.server 4173
 
 ## 添加音乐
 
-将有明确授权的 MP3 放到 `assets/audio/birthday.mp3`，建议 128–192 kbps、2–5 分钟、2–5 MB，并把 `content.js` 中的 `audio.enabled` 改为 `true`。音乐只会在用户点击开始按钮后尝试播放。
+当前仓库已包含一份来自 Wikimedia Commons 的 Public Domain 合成器演奏：`assets/audio/birthday.ogg`。来源和许可记录见 `assets/audio/README.md`。
+
+若要替换音乐，将有明确授权的 `.ogg` 或 `.mp3` 放到 `assets/audio/`，然后修改 `content.js` 中的 `audio.src`。建议 128–192 kbps、2–5 分钟、2–5 MB。音乐只会在用户点击开始按钮后尝试播放。
 
 ## GitHub Pages
 
