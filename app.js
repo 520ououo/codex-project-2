@@ -166,6 +166,19 @@
     if (target) target.focus();
   }
 
+  function focusWithoutScroll(target) {
+    if (!target) return;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    target.focus({ preventScroll: true });
+    // Some mobile browsers ignore the preventScroll option when a fixed
+    // overlay changes visibility. Restore the exact reading position instead
+    // of allowing the focus change to move the scene to the document start.
+    if (window.scrollX !== scrollX || window.scrollY !== scrollY) {
+      window.scrollTo(scrollX, scrollY);
+    }
+  }
+
   function openMessage({ kicker, title, text, note, focus }) {
     state.lastFocus = focus || document.activeElement;
     messageKicker.textContent = kicker;
@@ -197,13 +210,23 @@
   }
 
   function receiveBlessing() {
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
     personalLayer.hidden = true;
     root.classList.add("blessing-received");
     finalLayer.classList.add("is-received");
     burstFireworks();
     window.clearInterval(fireworksLoop);
     fireworksLoop = window.setInterval(burstFireworks, 5200);
-    window.setTimeout(() => $("#return-home-button").focus({ preventScroll: true }), 950);
+    window.setTimeout(() => {
+      const returnButton = $("#return-home-button");
+      focusWithoutScroll(returnButton);
+      // Keep the fireworks reveal in place even if the browser reflows after
+      // the final card fade-out completes.
+      if (window.scrollX !== scrollX || window.scrollY !== scrollY) {
+        window.scrollTo(scrollX, scrollY);
+      }
+    }, 950);
   }
 
   function handleBottle(button) {
