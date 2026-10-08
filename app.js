@@ -185,6 +185,7 @@
   }
 
   function openFinal() {
+    personalLayer.hidden = true;
     finalBody.textContent = config.finalMessage;
     finalLayer.hidden = false;
     root.classList.add("final-open");
@@ -192,6 +193,7 @@
   }
 
   function receiveBlessing() {
+    personalLayer.hidden = true;
     root.classList.add("blessing-received");
     finalLayer.classList.add("is-received");
     burstFireworks();

@@ -117,7 +117,7 @@ html:not(.js-ready) .no-script-content { display: block; width: var(--content); 
 .final-card h2 { color: var(--white); }.final-card .card-kicker { color: var(--gold); }.final-card .card-body { color: var(--white); }.final-card .card-note { color: var(--foam); }.final-card .primary-button { margin-top: 1.7rem; }.final-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }.final-actions .text-link { color: var(--foam); }
 .final-layer.is-received { background: transparent; backdrop-filter: none; pointer-events: none; transition: background-color 700ms ease; }
 .final-layer.is-received .final-card { opacity: 0; transform: translateY(1rem) scale(0.97); transition: opacity 900ms ease, transform 900ms ease; }
-.blessing-received .scene-header, .blessing-received .exploration, .blessing-received .site-footer { opacity: 0; pointer-events: none; transition: opacity 800ms ease; }
+.blessing-received .scene-header, .blessing-received .exploration, .blessing-received .personal-layer, .blessing-received .site-footer { opacity: 0; pointer-events: none; transition: opacity 800ms ease; }
 
 .site-footer { position: absolute; z-index: 15; right: 0; bottom: 0; left: 0; display: flex; justify-content: space-between; gap: 1rem; padding: 1rem max(1.25rem, env(safe-area-inset-right)) calc(1rem + env(safe-area-inset-bottom)) max(1.25rem, env(safe-area-inset-left)); background: linear-gradient(0deg, rgba(8, 13, 33, 0.92), transparent); color: rgba(208, 214, 223, 0.72); font-size: 0.7rem; }
 .site-footer p { margin: 0; }.site-footer a { text-underline-offset: 0.25em; }
