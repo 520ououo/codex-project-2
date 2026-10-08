@@ -203,7 +203,7 @@
     burstFireworks();
     window.clearInterval(fireworksLoop);
     fireworksLoop = window.setInterval(burstFireworks, 5200);
-    window.setTimeout(() => $("#return-home-button").focus(), 950);
+    window.setTimeout(() => $("#return-home-button").focus({ preventScroll: true }), 950);
   }
 
   function handleBottle(button) {
