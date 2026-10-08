@@ -23,6 +23,7 @@
   const personalSignature = $("#personal-signature");
   const personalClose = $("#personal-close");
   const finalLayer = $("#final-layer");
+  const finalCard = finalLayer.querySelector(".final-card");
   const finalBody = $("#final-body");
   const receiveButton = $("#receive-button");
   const meteorButton = $("#meteor-button");
@@ -203,6 +204,7 @@
 
   function openFinal() {
     personalLayer.hidden = true;
+    finalCard.hidden = false;
     finalBody.textContent = config.finalMessage;
     finalLayer.hidden = false;
     root.classList.add("final-open");
@@ -213,6 +215,7 @@
     const scrollX = window.scrollX;
     const scrollY = window.scrollY;
     personalLayer.hidden = true;
+    finalCard.hidden = true;
     root.classList.add("blessing-received");
     finalLayer.classList.add("is-received");
     burstFireworks();
@@ -302,6 +305,7 @@
     messageLayer.hidden = true;
     personalLayer.hidden = true;
     finalLayer.hidden = true;
+    finalCard.hidden = false;
     finalLayer.classList.remove("is-received");
     meteorButton.classList.remove("is-collected");
     meteorButton.setAttribute("aria-pressed", "false");
