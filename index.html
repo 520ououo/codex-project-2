@@ -3,158 +3,118 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#17152d">
-  <meta name="description" content="一封写给姐姐的生日祝福：沿着夜海的星光，慢慢收下每一份祝愿。">
+  <meta name="theme-color" content="#0b1029">
+  <meta name="description" content="在星空下的海滩上，打开一只只漂流瓶，收下写给姐姐的生日祝福。">
   <title>把今晚的星光，寄给姐姐</title>
   <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
   <script>document.documentElement.classList.add('js-ready');</script>
 </head>
 <body>
-  <a class="skip-link" href="#main-content">跳到主要内容</a>
-  <div class="site-shell">
-    <header class="topbar" aria-label="页面工具栏">
+  <a class="skip-link" href="#scene-stage">跳到主要内容</a>
+  <div class="site-shell" id="top">
+    <div class="scene-world" aria-hidden="true">
+      <div class="scene-photo"></div>
+      <div class="scene-vignette"></div>
+      <canvas id="sky-canvas"></canvas>
+      <div class="moon-disc"></div>
+      <div class="ocean-layer"><span class="wave wave-one"></span><span class="wave wave-two"></span><span class="wave wave-three"></span></div>
+      <div class="beach-layer"><span class="shore-line"></span><span class="sand-glow"></span></div>
+    </div>
+
+    <header class="scene-header" aria-label="页面工具栏">
       <a class="brand" href="#top" aria-label="回到开头">夜海寄信</a>
-      <div class="topbar-actions">
-        <span class="date-mark">10.09</span>
-        <button class="icon-button" id="mute-button" type="button" aria-label="静音音乐" aria-pressed="false" disabled>静音</button>
-        <button class="icon-button" id="audio-button" type="button" aria-label="播放音乐" disabled>音乐</button>
+      <div class="scene-tools">
+        <span class="progress-pill" id="progress-pill">漂流瓶 0 / 4</span>
+        <button class="tool-button" id="mute-button" type="button" aria-label="静音音乐" aria-pressed="false" disabled>静音</button>
+        <button class="tool-button" id="audio-button" type="button" aria-label="播放音乐" disabled>音乐</button>
       </div>
     </header>
 
-    <main id="main-content">
-      <section class="hero section-dark" id="top" aria-labelledby="hero-title">
-        <div class="starscape" aria-hidden="true">
-          <span class="star star-a"></span><span class="star star-b"></span>
-          <span class="star star-c"></span><span class="star star-d"></span>
-          <span class="star star-e"></span><span class="star star-f"></span>
-        </div>
-        <button class="moon" id="moon-button" type="button" aria-label="查看月亮藏着的祝福">
-          <span class="moon-inner"></span>
-        </button>
-        <div class="hero-content content-column">
-          <p class="eyebrow">A little light for your day</p>
+    <main id="scene-stage">
+      <section class="gate-panel" id="gate-panel" aria-labelledby="hero-title">
+        <div class="gate-copy">
+          <p class="eyebrow">A birthday night by the sea</p>
           <p class="hero-english">Happy Birthday</p>
           <h1 id="hero-title">生日快乐，姐姐</h1>
-          <p class="hero-subtitle">愿你今天收到很多温柔的祝福</p>
-          <p class="hero-lede">沿着海面的光，慢慢收下这些写给你的心意。</p>
-          <div class="hero-actions">
-            <button class="primary-button" id="start-button" type="button">开始点亮星光<span aria-hidden="true">✦</span></button>
-            <a class="text-link" href="#explore">先看看完整祝福</a>
-          </div>
-        </div>
-        <div class="ocean ocean-hero" aria-hidden="true"><div class="ocean-glow"></div></div>
-        <div class="scroll-cue" aria-hidden="true"><span></span>向下探索</div>
-      </section>
-
-      <section class="section explore-section" id="explore" aria-labelledby="explore-title">
-        <div class="content-column">
-          <div class="section-heading">
-            <p class="eyebrow">A sky full of wishes</p>
-            <h2 id="explore-title">把星星一颗颗点亮</h2>
-            <p>每一颗星星，都藏着一小段祝福。慢慢来，不必急着一次看完。</p>
-          </div>
-          <div class="progress-row" aria-live="polite">
-            <span id="progress-label">已点亮 0 / 4</span>
-            <span class="progress-line" aria-hidden="true"><span id="progress-bar"></span></span>
-          </div>
-          <p class="interaction-status" id="interaction-status">点亮第一颗星，开始收下祝福。</p>
-          <div class="star-field" aria-label="可探索的生日祝福">
-            <button class="star-button star-button-one" type="button" data-blessing-id="wish" aria-label="查看愿望祝福">
-              <span class="star-glyph" aria-hidden="true">✦</span><span>愿望</span><small>点击查看</small>
-            </button>
-            <button class="star-button star-button-two" type="button" data-blessing-id="courage" aria-label="查看鼓励祝福">
-              <span class="star-glyph" aria-hidden="true">✦</span><span>鼓励</span><small>点击查看</small>
-            </button>
-            <button class="star-button star-button-three" type="button" data-blessing-id="care" aria-label="查看陪伴祝福">
-              <span class="star-glyph" aria-hidden="true">✦</span><span>陪伴</span><small>点击查看</small>
-            </button>
-            <button class="star-button star-button-four" type="button" data-blessing-id="game" aria-label="查看游戏搭子祝福">
-              <span class="star-glyph" aria-hidden="true">✦</span><span>并肩</span><small>点击查看</small>
-            </button>
-          </div>
-          <div class="blessing-panel" id="blessing-panel" aria-live="polite" aria-atomic="true">
-            <p class="panel-kicker">星光留言</p>
-            <p id="blessing-title">选择一颗星星，打开一段祝福。</p>
-            <p id="blessing-text" class="panel-text"></p>
-            <p id="blessing-note" class="panel-note"></p>
-          </div>
-          <div class="static-blessings" aria-label="完整祝福内容">
-            <details><summary>愿望</summary><p>愿生活里有更多轻松和顺利，也愿每一个认真期待的明天，都慢慢向你靠近。</p></details>
-            <details><summary>鼓励</summary><p>愿你保持热爱，也拥有随时放慢脚步的自由。你可以按照自己的节奏，走向想去的地方。</p></details>
-            <details><summary>陪伴</summary><p>愿你被理解、被尊重、被温柔对待；疲惫的时候，有可以安心休息的空间。</p></details>
-            <details><summary>并肩</summary><p>愿每一次并肩开黑都遇到好队友、好网络和好心情，快乐稳定上线，不被坏运气掉线。</p></details>
-          </div>
-          <button class="secondary-button" id="direct-view-button" type="button">直接查看完整祝福</button>
+          <p class="gate-subtitle">今晚，海滩上漂来四只写着祝福的瓶子。</p>
+          <p class="gate-hint">打开它们，收集星光；偶尔也抬头看看，流星会替你藏下一句小彩蛋。</p>
+          <button class="primary-button" id="start-button" type="button">走进这片夜海<span aria-hidden="true">→</span></button>
         </div>
       </section>
 
-      <section class="poem-section section" aria-labelledby="poem-title">
-        <div class="content-column poem-layout">
-          <div>
-            <p class="eyebrow">A quiet line from the sea</p>
-            <h2 id="poem-title">给今天的月光</h2>
-          </div>
-          <div class="poem-copy">
-            <p>愿你走过的每一段路，<br>都有可以停下来的海岸；</p>
-            <p>愿你抬头看见星光时，<br>也知道自己一直值得被温柔对待。</p>
-          </div>
+      <section class="exploration" id="exploration" aria-labelledby="explore-title" hidden>
+        <div class="scene-intro">
+          <p class="eyebrow">The shore is waiting</p>
+          <h2 id="explore-title">沿着海浪，找找漂流瓶</h2>
+          <p>每只瓶子里都有一段祝福。点开它们，慢慢读完就好。</p>
         </div>
-      </section>
 
-      <section class="letter-section section" aria-labelledby="letter-title">
-        <div class="content-column letter-wrap">
-          <div class="letter-intro">
-            <p class="eyebrow">A note from your teammate</p>
-            <h2 id="letter-title">写给姐姐的一封小信</h2>
-            <p>有些祝福不适合匆匆说完，所以把它们放在这里，等你亲手打开。</p>
-          </div>
-          <div class="letter-card">
-            <div class="letter-seal" aria-hidden="true">✦</div>
-            <button class="letter-toggle" id="letter-toggle" type="button" aria-expanded="false" aria-controls="letter-content">打开这封信</button>
-            <div class="letter-content" id="letter-content" hidden>
-              <p>谢谢你一直是一个让并肩变得轻松的人。无论是认真生活的日子，还是上线之后一起面对小小的胜负，都希望你能保留属于自己的节奏和热爱。</p>
-              <p>愿工作和生活里都有值得期待的好事情；累的时候可以放心休息，犹豫的时候拥有重新选择的勇气。愿你走向更远的地方，也始终知道身边有真诚的祝福。</p>
-              <p class="signature">来自你的游戏搭子</p>
-            </div>
-          </div>
-          <p class="moon-message" id="moon-message" role="status" hidden></p>
-        </div>
-      </section>
-
-      <section class="bottle-section section" aria-labelledby="bottle-title">
-        <div class="content-column bottle-layout">
-          <div>
-            <p class="eyebrow">One more thing drifting in</p>
-            <h2 id="bottle-title">海面上还有一只漂流瓶</h2>
-            <p>它不急着靠岸，看到它的时候，轻轻点一下就好。</p>
-          </div>
-          <button class="bottle-button" id="bottle-button" type="button" aria-label="打开漂流瓶">
-            <span class="bottle-shape" aria-hidden="true"></span><span>打开漂流瓶</span>
+        <div class="bottle-field" aria-label="海滩上的漂流瓶">
+          <button class="bottle bottle-one" type="button" data-bottle-id="wish" aria-label="打开第一只漂流瓶：愿望">
+            <span class="bottle-visual" aria-hidden="true"><i></i></span><span class="bottle-label">愿望</span>
           </button>
-          <p class="bottle-message" id="bottle-message" role="status" hidden></p>
+          <button class="bottle bottle-two" type="button" data-bottle-id="courage" aria-label="打开第二只漂流瓶：鼓励">
+            <span class="bottle-visual" aria-hidden="true"><i></i></span><span class="bottle-label">鼓励</span>
+          </button>
+          <button class="bottle bottle-three" type="button" data-bottle-id="care" aria-label="打开第三只漂流瓶：陪伴">
+            <span class="bottle-visual" aria-hidden="true"><i></i></span><span class="bottle-label">陪伴</span>
+          </button>
+          <button class="bottle bottle-four" type="button" data-bottle-id="game" aria-label="打开第四只漂流瓶：并肩">
+            <span class="bottle-visual" aria-hidden="true"><i></i></span><span class="bottle-label">并肩</span>
+          </button>
         </div>
+
+        <button class="meteor-button" id="meteor-button" type="button" aria-label="收集流星彩蛋">
+          <span class="meteor-tail" aria-hidden="true"></span><span class="meteor-core" aria-hidden="true">✦</span>
+        </button>
+        <p class="meteor-hint">看到流星时，记得点一下</p>
+
+        <div class="scene-status" id="scene-status" role="status">海浪把第一只瓶子送到了岸边。</div>
+        <p class="audio-status" id="audio-status" role="status">音乐：点击开始后播放</p>
       </section>
 
-      <section class="final-section section-dark" id="final" aria-labelledby="final-title" hidden>
-        <div class="final-sparkles" aria-hidden="true"><span>✦</span><span>✧</span><span>✦</span></div>
-        <div class="content-column final-content">
-          <p class="eyebrow">The night is glowing now</p>
-          <h2 id="final-title">愿你新的一岁</h2>
-          <p class="final-message">愿你拥有继续热爱的勇气，也拥有随时休息的自由；愿生活、工作和游戏都能遇到好事情，愿未来有更多值得期待的风景，更多被理解、被尊重、被温柔对待的时刻。</p>
-          <p class="final-closer">生日快乐，姐姐。愿今晚的星光，替我把祝福送到你身边。</p>
-          <div class="final-actions">
-            <button class="primary-button" id="restart-button" type="button">重新播放祝福<span aria-hidden="true">↻</span></button>
-            <a class="text-link light-link" href="#top">回到开头</a>
-          </div>
-        </div>
-        <div class="ocean ocean-final" aria-hidden="true"><div class="ocean-glow"></div></div>
+      <section class="no-script-content" aria-label="完整祝福内容">
+        <p>愿生活里有更多轻松和顺利；愿你保持热爱，也拥有随时放慢脚步的自由；愿你被理解、被尊重、被温柔对待；愿每一次并肩开黑都遇到好队友和好心情。</p>
       </section>
     </main>
 
+    <div class="message-layer" id="message-layer" hidden>
+      <div class="message-card" role="dialog" aria-modal="true" aria-labelledby="message-title" aria-describedby="message-body">
+        <p class="card-kicker" id="message-kicker">漂流瓶里的话</p>
+        <h2 id="message-title">愿望</h2>
+        <p class="card-body" id="message-body"></p>
+        <p class="card-note" id="message-note"></p>
+        <button class="secondary-button" id="message-close" type="button">收好这句祝福</button>
+      </div>
+    </div>
+
+    <div class="message-layer personal-layer" id="personal-layer" hidden>
+      <div class="message-card letter-card" role="dialog" aria-modal="true" aria-labelledby="personal-title" aria-describedby="personal-body">
+        <p class="card-kicker">来自你的游戏搭子</p>
+        <h2 id="personal-title">写给姐姐的一封小信</h2>
+        <div class="card-body letter-body" id="personal-body"></div>
+        <p class="card-note signature" id="personal-signature"></p>
+        <button class="secondary-button" id="personal-close" type="button">我读完了，打开最终祝福</button>
+      </div>
+    </div>
+
+    <div class="message-layer final-layer" id="final-layer" hidden>
+      <div class="message-card final-card" role="dialog" aria-modal="true" aria-labelledby="final-title" aria-describedby="final-body">
+        <p class="card-kicker">夜海为你亮起</p>
+        <h2 id="final-title">愿你新的一岁</h2>
+        <p class="card-body" id="final-body"></p>
+        <p class="card-note final-closer">生日快乐，姐姐。愿今晚的星光，替我把祝福送到你身边。</p>
+        <div class="final-actions">
+          <button class="primary-button" id="restart-button" type="button">重新走一遍夜海<span aria-hidden="true">↻</span></button>
+          <a class="text-link" href="#top">回到开头</a>
+        </div>
+      </div>
+    </div>
+
     <footer class="site-footer">
       <p>愿每一次上线，都有好心情。</p>
-      <p id="audio-status" role="status">音乐：未添加本地音频</p>
+      <a href="https://commons.wikimedia.org/wiki/File:Ocean_of_Stars.jpg" target="_blank" rel="noreferrer">背景素材：Ocean of Stars / Milkazi91 / CC BY 4.0</a>
     </footer>
   </div>
   <audio id="background-audio" loop preload="none"></audio>

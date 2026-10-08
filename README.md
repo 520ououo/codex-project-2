@@ -18,10 +18,13 @@ py -m http.server 4173
 - 页面结构和语义：编辑 `index.html`。
 - 颜色、排版、响应式和动画：编辑 `styles.css`。
 - 交互状态和音乐控制：编辑 `app.js`。
+- 夜海场景底图：替换 `assets/images/ocean-stars.jpg`，并同步维护 `assets/images/README.md` 与页面底部署名。
 
 ## 添加音乐
 
 当前仓库已包含一份来自 Wikimedia Commons 的 Public Domain 合成器演奏：`assets/audio/birthday.ogg`。来源和许可记录见 `assets/audio/README.md`。
+
+夜海底图来自 Wikimedia Commons 的 `Ocean of Stars`，作者 Milkazi91，许可为 CC BY 4.0。页面底部保留署名链接，完整记录见 `assets/images/README.md`。
 
 若要替换音乐，将有明确授权的 `.ogg` 或 `.mp3` 放到 `assets/audio/`，然后修改 `content.js` 中的 `audio.src`。建议 128–192 kbps、2–5 分钟、2–5 MB。音乐只会在用户点击开始按钮后尝试播放。
 
