@@ -24,7 +24,7 @@
   const personalClose = $("#personal-close");
   const finalLayer = $("#final-layer");
   const finalBody = $("#final-body");
-  const restartButton = $("#restart-button");
+  const receiveButton = $("#receive-button");
   const meteorButton = $("#meteor-button");
   const audio = $("#background-audio");
   const audioButton = $("#audio-button");
@@ -188,8 +188,14 @@
     finalBody.textContent = config.finalMessage;
     finalLayer.hidden = false;
     root.classList.add("final-open");
-    burstFireworks();
     focusDialog(finalLayer);
+  }
+
+  function receiveBlessing() {
+    root.classList.add("blessing-received");
+    finalLayer.classList.add("is-received");
+    burstFireworks();
+    window.setTimeout(() => { finalLayer.hidden = true; }, 1300);
   }
 
   function handleBottle(button) {
@@ -274,7 +280,7 @@
     if (state.opened.size === config.blessings.length) setTimeout(openPersonal, 280);
   });
   personalClose.addEventListener("click", openFinal);
-  restartButton.addEventListener("click", restart);
+  receiveButton.addEventListener("click", receiveBlessing);
   audioButton.addEventListener("click", toggleAudio);
   muteButton.addEventListener("click", toggleMute);
   $$('[data-bottle-id]').forEach((button) => button.addEventListener("click", () => handleBottle(button)));
