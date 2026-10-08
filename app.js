@@ -26,6 +26,7 @@
   const finalCard = finalLayer.querySelector(".final-card");
   const finalBody = $("#final-body");
   const receiveButton = $("#receive-button");
+  const returnButton = $("#return-home-button");
   const meteorButton = $("#meteor-button");
   const audio = $("#background-audio");
   const audioButton = $("#audio-button");
@@ -42,6 +43,8 @@
   let meteorTimer = 0;
   let fireworksLoop = 0;
   let fireworksTimers = [];
+  let returnButtonTimer = 0;
+  let finaleStartedAt = 0;
   const stars = [];
   const meteors = [];
   const fireworks = [];
@@ -135,15 +138,24 @@
   function burstFireworks() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const colors = ["#f6d99a", "#9bdad8", "#a8a9f6", "#f9b8a5"];
+    const mobile = width < 600;
     [0, 360, 720, 1080].forEach((delay, index) => {
       const timer = setTimeout(() => {
         const x = width * (0.2 + Math.random() * 0.6);
         const y = height * (0.2 + Math.random() * 0.27);
         const particles = [];
-        for (let i = 0; i < 34; i += 1) {
-          const angle = (Math.PI * 2 * i) / 34;
-          const speed = 1.3 + Math.random() * 2.2;
-          particles.push({ x, y, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, life: 65 + Math.random() * 20, size: 1 + Math.random() * 1.4 });
+        const particleCount = mobile ? 38 : 34;
+        for (let i = 0; i < particleCount; i += 1) {
+          const angle = (Math.PI * 2 * i) / particleCount;
+          const speed = (mobile ? 1.15 : 1.3) + Math.random() * (mobile ? 2 : 2.2);
+          particles.push({
+            x,
+            y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            life: (mobile ? 78 : 65) + Math.random() * 20,
+            size: (mobile ? 1.7 : 1) + Math.random() * 1.4
+          });
         }
         fireworks.push({ particles, color: colors[index % colors.length] });
         fireworksTimers = fireworksTimers.filter((item) => item !== timer);
@@ -205,15 +217,22 @@
   function openFinal() {
     personalLayer.hidden = true;
     finalCard.hidden = false;
+    returnButton.hidden = true;
+    returnButton.classList.remove("is-ready");
     finalBody.textContent = config.finalMessage;
     finalLayer.hidden = false;
     root.classList.add("final-open");
     focusDialog(finalLayer);
   }
 
-  function receiveBlessing() {
+  function receiveBlessing(event) {
     const scrollX = window.scrollX;
     const scrollY = window.scrollY;
+    const keyboardActivation = event.detail === 0;
+    event.preventDefault();
+    event.stopPropagation();
+    finaleStartedAt = performance.now();
+    window.clearTimeout(returnButtonTimer);
     personalLayer.hidden = true;
     finalCard.hidden = true;
     root.classList.add("blessing-received");
@@ -221,15 +240,16 @@
     burstFireworks();
     window.clearInterval(fireworksLoop);
     fireworksLoop = window.setInterval(burstFireworks, 5200);
-    window.setTimeout(() => {
-      const returnButton = $("#return-home-button");
-      focusWithoutScroll(returnButton);
+    returnButtonTimer = window.setTimeout(() => {
+      returnButton.hidden = false;
+      requestAnimationFrame(() => returnButton.classList.add("is-ready"));
+      if (keyboardActivation) focusWithoutScroll(returnButton);
       // Keep the fireworks reveal in place even if the browser reflows after
       // the final card fade-out completes.
       if (window.scrollX !== scrollX || window.scrollY !== scrollY) {
         window.scrollTo(scrollX, scrollY);
       }
-    }, 950);
+    }, 1400);
   }
 
   function handleBottle(button) {
@@ -290,6 +310,10 @@
   }
 
   function restart() {
+    if (finaleStartedAt && performance.now() - finaleStartedAt < 1300) return;
+    window.clearTimeout(returnButtonTimer);
+    returnButtonTimer = 0;
+    finaleStartedAt = 0;
     window.clearInterval(fireworksLoop);
     fireworksLoop = 0;
     fireworksTimers.forEach((timer) => window.clearTimeout(timer));
@@ -307,6 +331,8 @@
     finalLayer.hidden = true;
     finalCard.hidden = false;
     finalLayer.classList.remove("is-received");
+    returnButton.hidden = true;
+    returnButton.classList.remove("is-ready");
     meteorButton.classList.remove("is-collected");
     meteorButton.setAttribute("aria-pressed", "false");
     status.textContent = "海浪把第一只瓶子送到了岸边。";
@@ -322,7 +348,7 @@
   });
   personalClose.addEventListener("click", openFinal);
   receiveButton.addEventListener("click", receiveBlessing);
-  $("#return-home-button").addEventListener("click", restart);
+  returnButton.addEventListener("click", restart);
   audioButton.addEventListener("click", toggleAudio);
   muteButton.addEventListener("click", toggleMute);
   $$('[data-bottle-id]').forEach((button) => button.addEventListener("click", () => handleBottle(button)));
