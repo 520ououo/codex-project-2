@@ -39,6 +39,8 @@
   let raf = 0;
   let lastFrame = 0;
   let meteorTimer = 0;
+  let fireworksLoop = 0;
+  let fireworksTimers = [];
   const stars = [];
   const meteors = [];
   const fireworks = [];
@@ -133,7 +135,7 @@
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const colors = ["#f6d99a", "#9bdad8", "#a8a9f6", "#f9b8a5"];
     [0, 360, 720, 1080].forEach((delay, index) => {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         const x = width * (0.2 + Math.random() * 0.6);
         const y = height * (0.2 + Math.random() * 0.27);
         const particles = [];
@@ -143,7 +145,9 @@
           particles.push({ x, y, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, life: 65 + Math.random() * 20, size: 1 + Math.random() * 1.4 });
         }
         fireworks.push({ particles, color: colors[index % colors.length] });
+        fireworksTimers = fireworksTimers.filter((item) => item !== timer);
       }, delay);
+      fireworksTimers.push(timer);
     });
   }
 
@@ -197,7 +201,9 @@
     root.classList.add("blessing-received");
     finalLayer.classList.add("is-received");
     burstFireworks();
-    window.setTimeout(() => { finalLayer.hidden = true; }, 1300);
+    window.clearInterval(fireworksLoop);
+    fireworksLoop = window.setInterval(burstFireworks, 5200);
+    window.setTimeout(() => $("#return-home-button").focus(), 950);
   }
 
   function handleBottle(button) {
@@ -258,16 +264,22 @@
   }
 
   function restart() {
+    window.clearInterval(fireworksLoop);
+    fireworksLoop = 0;
+    fireworksTimers.forEach((timer) => window.clearTimeout(timer));
+    fireworksTimers = [];
+    fireworks.length = 0;
     state.started = false;
     state.opened.clear();
     state.meteorSeen = false;
-    root.classList.remove("experience-started", "final-open");
+    root.classList.remove("experience-started", "final-open", "blessing-received");
     gate.classList.remove("is-dismissed");
     exploration.hidden = true;
     exploration.classList.remove("is-active");
     messageLayer.hidden = true;
     personalLayer.hidden = true;
     finalLayer.hidden = true;
+    finalLayer.classList.remove("is-received");
     meteorButton.classList.remove("is-collected");
     meteorButton.setAttribute("aria-pressed", "false");
     status.textContent = "海浪把第一只瓶子送到了岸边。";
@@ -283,6 +295,7 @@
   });
   personalClose.addEventListener("click", openFinal);
   receiveButton.addEventListener("click", receiveBlessing);
+  $("#return-home-button").addEventListener("click", restart);
   audioButton.addEventListener("click", toggleAudio);
   muteButton.addEventListener("click", toggleMute);
   $$('[data-bottle-id]').forEach((button) => button.addEventListener("click", () => handleBottle(button)));
@@ -290,7 +303,7 @@
     state.meteorSeen = true;
     meteorButton.classList.add("is-collected");
     meteorButton.setAttribute("aria-pressed", "true");
-    openMessage({ kicker: "流星彩蛋", title: "给你的一颗小星星", text: config.easterEggs.meteor, note: "小愿望不必说出来，留给今晚的海风就好。", focus: meteorButton });
+    openMessage({ kicker: "流星彩蛋", title: "给你的一颗小星星", text: config.easterEggs.meteor, note: "", focus: meteorButton });
   });
 
   messageLayer.addEventListener("click", (event) => { if (event.target === messageLayer) closeMessage(); });
